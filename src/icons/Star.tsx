@@ -1,7 +1,7 @@
-function Star() {
+function Star({ color }: { color: string }) {
 	return (
 		<svg
-			className="text-amber-500"
+			className={`text-${color}-500`}
 			stroke="currentColor"
 			fill="currentColor"
 			strokeWidth={0}

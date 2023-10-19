@@ -8,6 +8,7 @@ function App() {
 		<BrowserRouter>
 			<Navbar />
 			<br />
+
 			<Routes>
 				<Route path="/products" element={<ProductList />} />
 				<Route path="/products/:id" element={<ProductView />} />

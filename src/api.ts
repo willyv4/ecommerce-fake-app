@@ -25,3 +25,5 @@ class fakeStore {
 }
 
 export default fakeStore;
+
+fakeStore.getAllProducts();
