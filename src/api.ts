@@ -22,6 +22,11 @@ class fakeStore {
 		const res = await this.request(`products/${id}`);
 		return res;
 	}
+
+	static async getProductByCategory(category: string): Promise<Product> {
+		const res = await this.request(`products/category/${category}`);
+		return res;
+	}
 }
 
 export default fakeStore;

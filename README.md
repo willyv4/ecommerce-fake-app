@@ -1,6 +1,6 @@
 silly app for practice
 
-building a mock eccommerce site.
+building a front-end for a mock eccommerce site.
 
 pages
 
