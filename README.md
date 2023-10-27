@@ -10,6 +10,9 @@
 - Provide a product sorting feature for users to organize products based on various criteria.
 - Implement a product category search for user convenience.
 - Allow users to click into a detailed product view for more information.
+- price filter
+- rating filter
+- (more button) display full description
 
 ### Product View Page
 
