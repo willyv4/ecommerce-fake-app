@@ -3,7 +3,6 @@ import {
   ComputerDesktopIcon,
   SparklesIcon,
   PlusIcon,
-  ArrowPathIcon,
 } from "@heroicons/react/20/solid";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
@@ -55,18 +54,28 @@ const ProductList = () => {
 
   const handleSubmit = (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // if (search.text.length < 1) getProducts();
-    setProducts(filterProducts(search.text));
+    setProducts(filterByName(search.text));
   };
 
-  function filterProducts(text: string) {
-    const filtered = products?.filter((object) => {
+  function filterByPrice(min = 0, max = Infinity) {
+    return products?.filter(
+      (object) => object.price > min && object.price < max
+    );
+  }
+
+  useEffect(() => {
+    const res = filterByPrice();
+    console.log("Filtered by price", res);
+  });
+
+  function filterByName(text: string) {
+    return products?.filter((object) => {
       const regex = new RegExp(`\\b${text}\\w*\\b`, "gi");
 
-      if (object.title.match(regex) || object.description.match(regex))
+      if (object.title.match(regex) || object.description.match(regex)) {
         return object;
+      }
     });
-    return filtered;
   }
 
   return (
@@ -87,7 +96,7 @@ const ProductList = () => {
               {/* seaarch bar */}
               <form
                 onSubmit={handleSubmit}
-                className="flex flex-1 items-center justify-center mb-6"
+                className="flex flex-1 items-center justify-center mb-2"
               >
                 <div className="w-full sm:max-w-xs">
                   <label htmlFor="search" className="sr-only">
@@ -111,22 +120,56 @@ const ProductList = () => {
                     />
                   </div>
                 </div>
-                {/* <div
-                  onClick={getProducts}
-                  className="w-16 bg-indigo-400 rounded-md ml-1 py-[18px]"
-                >
-                  <div className="relative">
-                    <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center">
-                      <ArrowPathIcon
-                        className="h-5 w-5 ml-[15px] text-zinc-800"
-                        aria-hidden="true"
-                      />
-                    </div>
-                  </div>
-                </div> */}
               </form>
 
-              <div className="relative">
+              <form
+                onSubmit={handleSubmit}
+                className="grid grid-cols-2 gap-2 items-center justify-center mb-4"
+              >
+                <label htmlFor="Min Price" className="sr-only">
+                  Min Price
+                </label>
+                <div className="relative">
+                  <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                    <MagnifyingGlassIcon
+                      className="h-5 w-5 text-indigo-300"
+                      aria-hidden="true"
+                    />
+                  </div>
+                  <input
+                    id="min"
+                    name="min"
+                    value={search.text}
+                    onChange={handleChange}
+                    className="block w-full rounded-md border-0 bg-gray-700 py-1.5 pl-10 pr-3 text-gray-300 placeholder:text-gray-400 focus:bg-white focus:text-gray-900 focus:ring-0 focus:placeholder:text-gray-500 sm:text-sm sm:leading-6"
+                    placeholder="Min Price"
+                    type="number"
+                  />
+                </div>
+
+                <label htmlFor="Max Price" className="sr-only">
+                  Max Price
+                </label>
+                <div className="relative">
+                  <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                    <MagnifyingGlassIcon
+                      className="h-5 w-5 text-indigo-300"
+                      aria-hidden="true"
+                    />
+                  </div>
+                  <input
+                    id="max"
+                    name="max"
+                    value={search.text}
+                    onChange={handleChange}
+                    className="block w-full rounded-md border-0 bg-gray-700 py-1.5 pl-10 pr-3 text-gray-300 placeholder:text-gray-400 focus:bg-white focus:text-gray-900 focus:ring-0 focus:placeholder:text-gray-500 sm:text-sm sm:leading-6"
+                    placeholder="Max Price"
+                    type="number"
+                  />
+                </div>
+              </form>
+
+              <div className="relative mb-4">
                 <div
                   className="absolute inset-0 flex items-center"
                   aria-hidden="true"
@@ -142,10 +185,11 @@ const ProductList = () => {
                   </span>
                 </div>
               </div>
+
               {categories.map(({ Icon, name }) => (
                 <li
                   onClick={() => getProductByCategory(name)}
-                  className="relative  bg-gray-700 flex flex-row cursor-pointer mt-4 p-[5px] rounded-md"
+                  className="relative  bg-gray-700 flex flex-row cursor-pointer mt-2 p-[5px] rounded-md"
                 >
                   <div className="w-full sm:max-w-xs">
                     <p className="ml-9 text-zinc-100">{name}</p>
