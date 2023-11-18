@@ -95,7 +95,7 @@ const ProductView = () => {
 
         {/* Product image */}
         <div className="mt-10 lg:col-start-2 lg:row-span-2 lg:mt-0 lg:self-center">
-          <div className="aspect-h-1 aspect-w-1 overflow-hidden rounded-lg p-20">
+          <div className="overflow-hidden rounded-lg p-20">
             <img
               src={product.image}
               alt={product.title}

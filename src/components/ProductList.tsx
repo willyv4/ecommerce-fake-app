@@ -3,11 +3,11 @@ import {
   ComputerDesktopIcon,
   SparklesIcon,
   PlusIcon,
+  StarIcon,
 } from "@heroicons/react/20/solid";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import fakeStore from "../api";
-import Star from "../icons/Star";
 import { Product } from "../types/types";
 import { classNames } from "../Utils/utilityComponants";
 import Loader from "./Loader";
@@ -209,58 +209,116 @@ const ProductList = () => {
 
       <div className="flex flex-row flex-wrap justify-center w-full pt-10">
         {products ? (
-          products.map((product: Product) => (
-            <Link
-              to={`/products/${product.id}`}
-              key={product.id}
-              className="relative bg-white m-4 w-80 h-96 shadow-lg shadow-gray-300 rounded-md"
-            >
-              {/* Image */}
-              <div className="p-5 flex flex-row justify-center border-b-[1px] h-40">
-                <img
-                  src={product.image}
-                  alt={product.title}
-                  className="object-fit"
-                />
+          // products.map((product: Product) => (
+          //   <Link
+          //     to={`/products/${product.id}`}
+          //     key={product.id}
+          //     className="relative bg-white m-4 w-80 h-96 shadow-lg shadow-gray-300 rounded-md"
+          //   >
+          //     {/* Image */}
+          //     <div className="p-5 flex flex-row justify-center border-b-[1px] h-40">
+          //       <img
+          //         src={product.image}
+          //         alt={product.title}
+          //         className="object-fit"
+          //       />
+          //     </div>
+
+          //     {/* title, price */}
+
+          //     <ul className="flex flex-row justify-evenly my-2">
+          //       <li className="px-4 font-semibold">${product.price}</li>
+
+          //       <li className="px-4 flex flex-row">
+          //         <div className="flex flex-row mt-1 mr-1">
+          //           {Array(Math.floor(product.rating.rate)).fill(
+          //             <Star color="gold" />
+          //           )}
+          //           {Array(5 - Math.floor(product.rating.rate)).fill(
+          //             <Star color="gray" />
+          //           )}
+          //         </div>
+          //         •
+          //         <span className="ml-1 text-blue-700">
+          //           {product.rating.count}
+          //         </span>
+          //       </li>
+          //     </ul>
+          //     <div className="text-center mt-2 py-4 font-semibold px-4 border-t-[1px] truncate">
+          //       {product.title}
+          //     </div>
+          //     <p className="absolute top-2 right-2 text-[11px] font-semibold bg-gradient-to-r from-indigo-200 to-indigo-400  px-2 rounded-md">
+          //       {product.category}
+          //     </p>
+
+          //     <div className="relative h-20 ">
+          //       <p className="mx-6 h-full py-1 text-gray-600 overflow-hidden">
+          //         {product.description}{" "}
+          //       </p>
+          //       <button className="bg-gradient-to-tl from-white via-white  py-2 pl-10 absolute z-10 right-6 bottom-1 text-underline text-blue-700 hover:underline">
+          //         ...more
+          //       </button>
+          //     </div>
+          //   </Link>
+          // ))
+          <div className="bg-white">
+            <div className="mx-auto overflow-hidden sm:px-6 lg:px-8">
+              <h2 className="sr-only">Products</h2>
+
+              <div className="grid grid-cols-2 mt-16 sm:mx-0 md:grid-cols-3 lg:grid-cols-4">
+                {products.map((product) => (
+                  <Link to={`/products/${product.id}`} key={product.id}>
+                    <div
+                      key={product.id}
+                      className="group relative border h-full border-gray-200 sm:p-6"
+                    >
+                      <div className="flex mx-auto w-2/4 overflow-hidden rounded-lg bg-gray-200 group-hover:opacity-75">
+                        <img
+                          src={product.image}
+                          alt={product.title}
+                          className="w-full object-fit object-center"
+                        />
+                      </div>
+                      <div className="pb-4 pt-10 text-center">
+                        <h3 className="text-sm font-medium text-gray-900">
+                          <span
+                            aria-hidden="true"
+                            className="absolute inset-0"
+                          />
+                          {product.title}
+                        </h3>
+                        <div className="mt-3 flex flex-col items-center">
+                          <p className="sr-only">
+                            {Math.floor(product.rating.rate)} out of 5 stars
+                          </p>
+                          <div className="flex items-center">
+                            {[0, 1, 2, 3, 4].map((rating) => (
+                              <StarIcon
+                                key={rating}
+                                className={classNames(
+                                  Math.floor(product.rating.rate) > rating
+                                    ? "text-yellow-400"
+                                    : "text-gray-200",
+                                  "h-5 w-5 flex-shrink-0"
+                                )}
+                                aria-hidden="true"
+                              />
+                            ))}
+                          </div>
+                          <p className="mt-1 text-sm text-gray-500">
+                            {Math.floor(Math.random() * 100)} reviews
+                          </p>
+                        </div>
+                        <p className="mt-4 text-base font-medium text-gray-900">
+                          ${product.price}
+                        </p>
+                      </div>
+                    </div>
+                  </Link>
+                ))}
               </div>
-
-              {/* title, price */}
-
-              <ul className="flex flex-row justify-evenly my-2">
-                <li className="px-4 font-semibold">${product.price}</li>
-
-                <li className="px-4 flex flex-row">
-                  <div className="flex flex-row mt-1 mr-1">
-                    {Array(Math.floor(product.rating.rate)).fill(
-                      <Star color="gold" />
-                    )}
-                    {Array(5 - Math.floor(product.rating.rate)).fill(
-                      <Star color="gray" />
-                    )}
-                  </div>
-                  •
-                  <span className="ml-1 text-blue-700">
-                    {product.rating.count}
-                  </span>
-                </li>
-              </ul>
-              <div className="text-center mt-2 py-4 font-semibold px-4 border-t-[1px] truncate">
-                {product.title}
-              </div>
-              <p className="absolute top-2 right-2 text-[11px] font-semibold bg-gradient-to-r from-indigo-200 to-indigo-400  px-2 rounded-md">
-                {product.category}
-              </p>
-
-              <div className="relative h-20 ">
-                <p className="mx-6 h-full py-1 text-gray-600 overflow-hidden">
-                  {product.description}{" "}
-                </p>
-                <button className="bg-gradient-to-tl from-white via-white  py-2 pl-10 absolute z-10 right-6 bottom-1 text-underline text-blue-700 hover:underline">
-                  ...more
-                </button>
-              </div>
-            </Link>
-          ))
+            </div>
+          </div>
         ) : (
           <Loader />
         )}

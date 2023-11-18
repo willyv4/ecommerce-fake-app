@@ -1,13 +1,16 @@
 import { Fragment } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
-import { MagnifyingGlassIcon } from "@heroicons/react/20/solid";
+import {
+  MagnifyingGlassIcon,
+  ShoppingBagIcon,
+} from "@heroicons/react/20/solid";
 import {
   Bars3Icon,
   ShoppingCartIcon,
   XMarkIcon,
 } from "@heroicons/react/24/outline";
 import { classNames } from "../Utils/utilityComponants";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 const navigation = [
   { name: "Products", href: "/products", current: true },
@@ -23,18 +26,19 @@ const userNavigation = [
 
 export default function NavBar() {
   return (
-    <Disclosure as="header" className="bg-gray-800 fixed w-full z-50 shadow-xl">
+    <Disclosure
+      as="header"
+      className="bg-gray-800 fixed w-full z-50 shadow-xl top-0"
+    >
       {({ open }) => (
         <>
           <div className="mx-auto max-w-7xl px-2 sm:px-4 lg:divide-y lg:divide-gray-700 lg:px-8">
             <div className="relative flex h-16 justify-between">
               <div className="relative z-10 flex px-2 lg:px-0">
                 <div className="flex flex-shrink-0 items-center">
-                  <img
-                    className="h-8 w-auto"
-                    src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
-                    alt="Your Company"
-                  />
+                  <NavLink to={"/"}>
+                    <ShoppingBagIcon className="fill-purple-500 w-10 h-10" />
+                  </NavLink>
                 </div>
               </div>
               <div className="relative z-10 flex items-center lg:hidden">
